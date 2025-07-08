@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Passeios em Tutóia - Rangel Tur</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Variáveis CSS para cores da sua marca e consistência */
+        :root {
+            --azul: #003366;
+            --amarelo: #ffe600;
+            --laranja: #ff7f00;
+            --laranja-escuro: #cc6600; /* Novo tom de laranja para hover */
+            --branco: #ffffff;
+            --cinza-claro: #f9f9f9;
+            --texto-claro: #ffffff;
+            --sombra-clara: rgba(0,0,0,0.1);
+            --sombra-media: rgba(0,0,0,0.15);
+            --primary-color: var(--azul);
+            --secondary-color: #25d366; /* Verde do WhatsApp */
+            --accent-color: var(--amarelo);
+            --text-dark: var(--azul);
+            --text-light: var(--branco);
+            --bg-light: var(--cinza-claro);
+            --bg-dark: var(--azul);
+        }
+
+        /* Reset Básico de estilos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--branco);
+            overflow-x: hidden; /* Evita barra de rolagem horizontal indesejada */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 60px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* --- Estilos do Header (Barra Superior) --- */
+        .page-header {
+            background-color: var(--branco);
+            border-bottom: 2px solid var(--laranja);
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px var(--sombra-clara);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            height: auto;
+
+            /* Transição para a animação de aparecer/sumir */
+            transition: top 0.3s ease-out, opacity 0.3s ease-out;
+        }
+
+        /* Classe para esconder o header (usada pelo JavaScript) */
+        .page-header.hidden {
+            top: -120px; /* Move o header para fora da tela (ajuste se a logo for maior) */
+            opacity: 0; /* Torna-o invisível */
+            pointer-events: none; /* Impede cliques em elementos ocultos */
+        }
+
+        .page-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 5px 0;
+            min-height: 80px;
+        }
+
+        /* Estilo da Logo */
+        .page-header .logo img {
+            height: 90px;
+            max-height: 100px;
+            width: auto;
+            flex-shrink: 0;
+            display: block;
+        }
+
+        /* Estilo do Botão "Voltar à Página Inicial" */
+        .page-header .back-button {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            font-size: 0.85em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .page-header .back-button i {
+            margin-right: 5px;
+        }
+
+        .page-header .back-button:hover {
+            background-color: #002244;
+        }
+
+        /* --- Seção de Conteúdo Principal (Passeios) --- */
+        #tutoia-tours-details {
+            background-color: var(--bg-light);
+            text-align: center;
+            padding-top: 150px;
+            padding-bottom: 60px;
+        }
+
+        #tutoia-tours-details h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        #tutoia-tours-details > p {
+            max-width: 90%;
+            margin: 0 auto 30px;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+
+        .tour-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .tour-item {
+            background-color: var(--branco);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--sombra-clara);
+            overflow: hidden;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .tour-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .tour-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .tour-item-content {
+            padding: 20px;
+        }
+
+        .tour-item-content h3 {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tour-item-content p {
+            font-size: 0.95em;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        /* Estilo para botões de ação dentro dos passeios */
+        .tour-item-content .btn-primary {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 0.95em;
+            text-align: center;
+            display: block;
+            margin-top: 15px;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .tour-item-content .btn-primary:hover {
+            background-color: #002244;
+        }
+
+        /* NOVO ESTILO PARA O BOTÃO QUE ABRE A GALERIA */
+        .tour-item-content .open-gallery-btn { /* Renomeado de .video-btn */
+            background-color: var(--laranja);
+            color: var(--branco);
+            padding: 12px 22px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer; /* Indica que é clicável */
+        }
+
+        .tour-item-content .open-gallery-btn:hover {
+            background-color: var(--laranja-escuro);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        /* --- Estilos para o Rodapé --- */
+        .page-footer {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding: 25px 0;
+            text-align: center;
+            font-size: 0.85em;
+            margin-top: 50px;
+        }
+
+        .page-footer .social-links a {
+            color: var(--text-light);
+            font-size: 1.4em;
+            margin: 0 10px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .page-footer .social-links a:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        /* --- Estilos da Galeria Modal (Lightbox) --- */
+        .gallery-modal {
+            display: none; /* Escondido por padrão */
+            position: fixed; /* Fixado na tela */
+            z-index: 1000; /* Acima de tudo */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Permite rolagem se o conteúdo for grande */
+            background-color: rgba(0,0,0,0.9); /* Fundo escuro semi-transparente */
+            justify-content: center; /* Centraliza horizontalmente o conteúdo */
+            align-items: center; /* Centraliza verticalmente o conteúdo */
+        }
+
+        .gallery-modal.show {
+            display: flex; /* Mostra o modal */
+        }
+
+        .gallery-content {
+            position: relative; /* Para posicionar botões e legenda */
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Conteúdo e legenda */
+        }
+
+        .gallery-content img,
+        .gallery-content video {
+            max-width: 100%;
+            max-height: 80vh; /* Ocupa no máximo 80% da altura da viewport */
+            display: block;
+            margin: auto; /* Centraliza */
+        }
+
+        .gallery-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 1001; /* Acima do conteúdo da galeria */
+        }
+
+        .gallery-close:hover,
+        .gallery-close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .gallery-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #f1f1f1;
+            cursor: pointer;
+            padding: 10px;
+            transition: 0.3s;
+            user-select: none; /* Impede seleção de texto */
+            background-color: rgba(0,0,0,0.3); /* Fundo para melhorar visibilidade */
+            border-radius: 5px;
+        }
+
+        .gallery-nav-btn:hover {
+            color: #bbb;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .gallery-prev {
+            left: 15px;
+        }
+
+        .gallery-next {
+            right: 15px;
+        }
+
+        .gallery-caption {
+            color: #ccc;
+            font-size: 1.2em;
+            padding: 10px 0;
+            text-align: center;
+            max-width: 80%;
+            margin-top: 10px;
+        }
+
+        /* --- Responsividade (Media Queries) --- */
+        @media (max-width: 768px) {
+            .page-header .container {
+                min-height: 65px;
+                padding: 3px 0;
+            }
+            .page-header .logo img {
+                height: 65px;
+                max-height: 75px;
+            }
+            .page-header .back-button {
+                padding: 7px 10px;
+                font-size: 0.75em;
+            }
+            #tutoia-tours-details {
+                padding-top: 110px;
+            }
+            #tutoia-tours-details h1 {
+                font-size: 2.2em;
+            }
+            #tutoia-tours-details > p {
+                font-size: 0.95em;
+            }
+            .tour-item img {
+                height: 160px;
+            }
+            .tour-item-content {
+                padding: 15px;
+            }
+            .tour-item-content h3 {
+                font-size: 1.3em;
+            }
+            .tour-item-content p {
+                font-size: 0.875em;
+            }
+            .tour-item-content .btn-primary,
+            .tour-item-content .open-gallery-btn {
+                padding: 9px 14px;
+                font-size: 0.85em;
+            }
+            .page-footer {
+                padding: 18px 0;
+                font-size: 0.78em;
+            }
+            .page-footer .social-links a {
+                font-size: 1.25em;
+            }
+
+            /* Ajustes para a galeria no mobile */
+            .gallery-close {
+                top: 5px;
+                right: 15px;
+                font-size: 30px;
+            }
+            .gallery-nav-btn {
+                font-size: 35px;
+            }
+            .gallery-prev {
+                left: 5px;
+            }
+            .gallery-next {
+                right: 5px;
+            }
+            .gallery-caption {
+                font-size: 1em;
+            }
+        }
+
+        /* Regras específicas para telas maiores que 768px (tablets maiores e desktops) */
+        @media (min-width: 769px) {
+            .page-header .container {
+                min-height: 80px;
+                padding: 5px 0;
+            }
+            .page-header .logo img {
+                height: 90px;
+                max-height: 100px;
+            }
+            .page-header .back-button {
+                padding: 12px 20px;
+                font-size: 0.9em;
+            }
+            #tutoia-tours-details {
+                padding-top: 150px;
+            }
+            #tutoia-tours-details h1 {
+                font-size: 3.2em;
+            }
+            #tutoia-tours-details > p {
+                font-size: 1.1em;
+                max-width: 800px;
+            }
+            .tour-grid {
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                gap: 30px;
+            }
+            .tour-item img {
+                height: 220px;
+            }
+            .tour-item-content {
+                padding: 25px;
+            }
+            .tour-item-content h3 {
+                font-size: 1.7em;
+            }
+            .tour-item-content p {
+                font-size: 1em;
+            }
+            .tour-item-content .btn-primary {
+                width: auto;
+                display: inline-block;
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+            .tour-item-content .open-gallery-btn {
+                padding: 14px 30px;
+                font-size: 1.05em;
+            }
+            .page-footer {
+                padding: 35px 0;
+                font-size: 0.9em;
+            }
+            .page-footer .social-links a {
+                font-size: 1.6em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="logo.PNG" alt="Rangel Tur">
+                </a>
+            </div>
+            <a href="index.html" class="back-button"><i class="fas fa-arrow-left"></i> Voltar à Página Inicial</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="tutoia-tours-details" class="section-padding">
+            <div class="container">
+                <h1>Passeios Turísticos Incríveis em Tutóia - MA</h1>
+                <p>
+                    Explore as belezas naturais e os encantos de Tutóia, no Maranhão, a porta de entrada para o Delta do Parnaíba. Nossos passeios oferecem uma experiência única, combinando aventura e contato com a natureza exuberante da região. Prepare-se para paisagens de tirar o fôlego e momentos inesquecíveis!
+                </p>
+
+                <div class="tour-grid">
+                    <div class="tour-item">
+                        <img src="imagem do por do sol 02.jpeg" alt="Passeio aos Pequenos Lençóis">
+                        <div class="tour-item-content">
+                            <h3>Passeio Terrestre: Pequenos Lençóis</h3>
+                            <p>
+                                Aventure-se em um emocionante passeio de **buggy ou veículo 4x4** pelos deslumbrantes Pequenos Lençóis Maranhenses, partindo de Tutóia. Explore as vastas dunas de areia branca e refresque-se nas lagoas de águas cristalinas que se formam entre elas. Uma experiência inesquecível em um cenário paradisíaco, perfeito para fotos e pura diversão!
+                            </p>
+                            <p style="font-size: 0.9em; color: var(--azul); margin-bottom: 10px; font-weight: 600;">Para mais informações, assista ao vídeo e veja as fotos:</p>
+                            <a href="#" class="open-gallery-btn" data-gallery-id="passeio-lencois">Ver Galeria de Fotos e Vídeo</a>
+                        </div>
+                    </div>
+
+                    <div class="tour-item">
+                        <img src="delta.jpeg" alt="Passeio de Lancha pelas Ilhas do Delta">
+                        <div class="tour-item-content">
+                            <h3>Tour de Lancha pelas Ilhas do Delta</h3>
+                            <p>
+                                Embarque em um emocionante passeio de lancha pelas ilhas paradisíacas do majestoso Delta do Parnaíba, partindo de Tutóia. Explore tesouros como a famosa Ilha do Amor, com suas dunas e águas calmas, e a serena Ilha da Ponta do Mel. Desfrute de paradas estratégicas para mergulho em águas mornas e cristalinas, banhos de sol e momentos de puro relaxamento em cenários de tirar o fôlego. Uma experiência perfeita para desbravar as belezas naturais e intocadas do Delta.
+                            </p>
+                            </div>
+                    </div>
+
+                    <div class="tour-item">
+                        <img src="revoada dos guaras.jpeg" alt="Revoada dos Guarás em Tutóia ao Pôr do Sol">
+                        <div class="tour-item-content">
+                            <h3>Revoada dos Guarás ao Pôr do Sol</h3>
+                            <p>
+                                Um espetáculo natural inesquecível e exclusivo do Delta do Parnaíba! Embarque em um passeio de fim de tarde, partindo de Tutóia, para testemunhar a mágica revoada dos Guarás. Milhares dessas aves de plumagem vermelha intensa retornam aos mangues para dormir, transformando o céu em uma tela vibrante de cores ao pôr do sol. É uma experiência emocionante e única, ideal para amantes da natureza e fotógrafos, que ficará para sempre na sua memória.
+                            </p>
+                            </div>
+                    </div>
+
+                </div>
+                <p style="margin-top: 40px; font-size: 1em; font-weight: 600;">
+                    Pronto para viver essas experiências únicas em Tutóia? Entre em contato e personalize seu roteiro!
+                </p>
+                <a href="index.html" class="btn-primary" style="margin-top: 15px; font-size: 0.9em; padding: 10px 20px;">Fale Conosco e Reserve!</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="page-footer">
+        <div class="container">
+            <p>&copy; 2025 Rangel Tur - Kite Turismo. Todos os direitos reservados.</p>
+            <div class="social-links" style="margin-top: 10px;">
+                <a href="https://www.instagram.com/rangel_tur?igsh=MXRxZ280NHpvcnJ5Mw==" target="_blank" aria-label="Instagram Rangel Tur"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/share/16n8yQAzYe/?mibextid=wwXIfr" target="_blank" aria-label="Facebook Rangel Tur"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://wa.me/5598999441705" target="_blank" aria-label="WhatsApp Rangel Tur"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="galleryModal" class="gallery-modal">
+        <span class="gallery-close">&times;</span>
+        <div class="gallery-content">
+            <div id="galleryMedia" class="gallery-media-wrapper">
+                </div>
+            <a class="gallery-nav-btn gallery-prev">&#10094;</a>
+            <a class="gallery-nav-btn gallery-next">&#10095;</a>
+            <div id="galleryCaption" class="gallery-caption"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Script para a Animação do Header (Sumir/Aparecer) ---
+            const header = document.querySelector('.page-header');
+            let lastScrollY = window.scrollY;
+            let ticking = false;
+
+            function updateHeaderVisibility() {
+                const currentScrollY = window.scrollY;
+
+                if (currentScrollY > lastScrollY && currentScrollY > header.offsetHeight + 20) {
+                    header.classList.add('hidden');
+                } else if (currentScrollY < lastScrollY || currentScrollY <= header.offsetHeight) {
+                    header.classList.remove('hidden');
+                }
+
+                lastScrollY = currentScrollY;
+                ticking = false;
+            }
+
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateHeaderVisibility);
+                    ticking = true;
+                }
+            });
+
+            header.classList.remove('hidden'); // Garante que o header esteja visível ao carregar
+
+            // --- Script para a Galeria Modal ---
+            const galleryModal = document.getElementById('galleryModal');
+            const galleryCloseBtn = document.querySelector('.gallery-close');
+            const galleryMediaWrapper = document.getElementById('galleryMedia');
+            const galleryPrevBtn = document.querySelector('.gallery-prev');
+            const galleryNextBtn = document.querySelector('.gallery-next');
+            const galleryCaption = document.getElementById('galleryCaption');
+            let currentGalleryIndex = 0;
+            let activeGalleryItems = [];
+
+            // Dados da Galeria (AGORA COM SUAS IMAGENS!)
+            // Certifique-se de que esses arquivos de imagem e vídeo estejam na mesma pasta que o seu index2.html,
+            // ou forneça o caminho correto para eles.
+            const galleries = {
+                "passeio-lencois": [
+                    { src: 'video.MP4', type: 'video', caption: 'Assista ao vídeo da aventura nos Pequenos Lençóis!' },
+                    { src: 'imagem do por do sol 01.jpeg', type: 'image', caption: 'Pôr do sol mágico nos Pequenos Lençóis.' },
+                    { src: 'buggy.jpeg', type: 'image', caption: 'Turma animada no passeio de buggy!' },
+                    { src: 'ele no balanco.jpeg', type: 'image', caption: 'Divertindo-se no balanço em Tutóia.' },
+                    { src: 'ela no balanco.jpeg', type: 'image', caption: 'Curta a liberdade no balanço nas dunas.' },
+                    { src: 'eles no lagoa do coqueiro.jpeg', type: 'image', caption: 'A paisagem espetacular da Lagoa do Coqueiro.' },
+                    { src: 'imagem do por do sol 02.jpeg', type: 'image', caption: 'Outro ângulo do pôr do sol nas dunas e lagoas.' }
+                ],
+                // Você pode adicionar outras galerias aqui para outros passeios, se desejar
+                /*
+                "passeio-delta": [
+                    { src: 'delta_imagem1.jpg', type: 'image', caption: 'Ilha do Amor.' },
+                    { src: 'delta_imagem2.jpg', type: 'image', caption: 'Cenário do Delta.' }
+                ],
+                "revoada-guaras": [
+                    { src: 'guaras_video.mp4', type: 'video', caption: 'Vídeo da Revoada.' },
+                    { src: 'guaras_imagem1.jpg', type: 'image', caption: 'Guarás ao entardecer.' }
+                ]
+                */
+            };
+
+            // Função para exibir o item da galeria
+            function showGalleryItem(index) {
+                if (activeGalleryItems.length === 0) return;
+
+                currentGalleryIndex = (index + activeGalleryItems.length) % activeGalleryItems.length;
+                const item = activeGalleryItems[currentGalleryIndex];
+
+                galleryMediaWrapper.innerHTML = ''; // Limpa o conteúdo anterior
+                if (item.type === 'video') {
+                    const video = document.createElement('video');
+                    video.src = item.src;
+                    video.controls = true;
+                    video.autoplay = true; // Auto-play no vídeo
+                    video.loop = false; // Opcional: vídeo em loop (coloque true se quiser loop)
+                    video.muted = false; // Garante que o vídeo não comece mutado
+                    galleryMediaWrapper.appendChild(video);
+                } else if (item.type === 'image') {
+                    const img = document.createElement('img');
+                    img.src = item.src;
+                    galleryMediaWrapper.appendChild(img);
+                }
+                galleryCaption.textContent = item.caption || ''; // Exibe a legenda
+            }
+
+            // Event listener para abrir a galeria
+            document.querySelectorAll('.open-gallery-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault(); // Evita que o link # mude a URL
+                    const galleryId = this.dataset.galleryId;
+                    activeGalleryItems = galleries[galleryId];
+
+                    if (activeGalleryItems && activeGalleryItems.length > 0) {
+                        galleryModal.classList.add('show');
+                        document.body.style.overflow = 'hidden'; // Impede rolagem do corpo
+                        showGalleryItem(0); // Mostra o primeiro item da galeria
+                    } else {
+                        console.warn(`Galeria com ID "${galleryId}" não encontrada ou vazia.`);
+                    }
+                });
+            });
+
+            // Event listener para fechar a galeria
+            galleryCloseBtn.addEventListener('click', function() {
+                galleryModal.classList.remove('show');
+                document.body.style.overflow = ''; // Restaura a rolagem do corpo
+                galleryMediaWrapper.innerHTML = ''; // Limpa o conteúdo ao fechar
+            });
+
+            // Event listener para navegação (próximo)
+            galleryNextBtn.addEventListener('click', function() {
+                showGalleryItem(currentGalleryIndex + 1);
+            });
+
+            // Event listener para navegação (anterior)
+            galleryPrevBtn.addEventListener('click', function() {
+                showGalleryItem(currentGalleryIndex - 1);
+            });
+
+            // Fechar com a tecla ESC
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && galleryModal.classList.contains('show')) {
+                    galleryModal.classList.remove('show');
+                    document.body.style.overflow = '';
+                    galleryMediaWrapper.innerHTML = '';
+                }
+            });
+
+            // Fechar clicando fora da mídia (no fundo escuro do modal)
+            galleryModal.addEventListener('click', function(event) {
+                if (event.target === galleryModal) {
+                    galleryModal.classList.remove('show');
+                    document.body.style.overflow = '';
+                    galleryMediaWrapper.innerHTML = '';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

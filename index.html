@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Rangel Tur | Kite Turismo</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --azul: #003366;
+            --amarelo: #ffe600;
+            --laranja: #ff7f00;
+            --branco: #ffffff;
+            --cinza-claro: #f9f9f9;
+            --texto-claro: #ffffff;
+            --sombra-clara: rgba(0,0,0,0.1);
+            --sombra-media: rgba(0,0,0,0.15);
+            --sombra-forte: rgba(0,0,0,0.7);
+
+            --primary-color: var(--azul);
+            --secondary-color: #25d366;
+            --accent-color: var(--amarelo);
+            --text-dark: var(--azul);
+            --text-light: var(--branco);
+            --bg-light: var(--cinza-claro);
+            --bg-dark: var(--azul);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--branco);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 60px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* HEADER */
+        .main-header {
+            background-color: transparent; /* Fundo transparente */
+            border-bottom: none; /* Removendo a borda de cor laranja */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px; /* Aumentando a altura para comportar a logo maior */
+            z-index: 1001; /* Garantindo que fique acima da Hero Section */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: none; /* Removendo a sombra, já que o fundo é transparente */
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .main-header.scrolled { /* Nova classe para quando o scroll acontecer */
+            background-color: var(--branco); /* Fundo branco ao rolar */
+            box-shadow: 0 2px 5px var(--sombra-clara); /* Sombra ao rolar */
+            border-bottom: 2px solid var(--laranja); /* Adiciona a borda novamente ao rolar */
+        }
+
+        .main-header.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0;
+            flex-wrap: nowrap;
+        }
+
+        .main-header .logo {
+            order: 0;
+        }
+
+        .main-header .logo img {
+            height: 90px; /* Aumentando o tamanho da logo */
+            transition: height 0.3s ease; /* Transição para o tamanho da logo */
+        }
+
+        .main-header.scrolled .logo img { /* Reduz a logo quando a barra rolar */
+            height: 60px;
+        }
+
+        .header-social-icons {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            order: 1;
+            z-index: 1002;
+        }
+
+        .header-social-icons a {
+            color: var(--branco); /* Cor branca para melhor contraste sobre o fundo inicial */
+            font-size: 1.8em;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .main-header.scrolled .header-social-icons a { /* Mudar cor quando a barra rolar */
+            color: var(--primary-color);
+        }
+
+        .header-social-icons a:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .hamburger-menu {
+            display: block;
+            font-size: 1.8em;
+            color: var(--branco); /* Cor branca para melhor contraste sobre o fundo inicial */
+            cursor: pointer;
+            z-index: 1002;
+            padding: 10px;
+            border-radius: 5px;
+            transition: color 0.3s ease;
+            margin-left: 15px;
+            order: 2;
+        }
+
+        .main-header.scrolled .hamburger-menu { /* Mudar cor quando a barra rolar */
+            color: var(--primary-color);
+        }
+
+        .hamburger-menu:hover {
+            color: var(--accent-color);
+        }
+
+        /* ANIMAÇÃO DO ÍCONE HAMBÚRGUER */
+        .hamburger-menu i {
+            transition: transform 0.3s ease-in-out; /* Transição suave para a rotação */
+        }
+
+        .hamburger-menu.active i {
+            transform: rotate(90deg); /* Gira 90 graus para parecer um "X" quando o menu está ativo */
+        }
+
+        .main-nav {
+            display: block;
+            position: absolute;
+            top: 100px; /* Ajustado para a nova altura do header */
+            right: 20px; /* Ajustado para o padding do header */
+            width: 200px; /* Largura padrão para desktop, será sobrescrita em mobile */
+            background-color: var(--branco); /* Fundo branco para o menu ao abrir */
+            border-radius: 8px;
+            box-shadow: 0 4px 15px var(--sombra-media);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            z-index: 1002;
+        }
+
+        .main-nav.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .main-nav ul {
+            list-style: none;
+            padding: 15px 0;
+            flex-direction: column;
+        }
+
+        .main-nav ul li {
+            margin: 0;
+            border-bottom: 1px solid var(--cinza-claro);
+        }
+
+        .main-nav ul li:last-child {
+            border-bottom: none;
+        }
+
+        .main-nav ul li a {
+            display: block;
+            padding: 12px 20px;
+            text-align: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .main-nav ul li a:hover {
+            background-color: var(--cinza-claro);
+            color: var(--accent-color);
+        }
+
+        /* Hero Section - Ajustes para imagem de fundo responsiva (priorizando a pessoa à direita) */
+        .hero-section {
+            position: relative;
+            min-height: 600px; /* Altura mínima para telas maiores */
+            height: 100vh; /* Ocupa 100% da altura da viewport em desktop */
+            max-height: 700px; /* Limita a altura máxima para telas muito grandes */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-align: center;
+            overflow: hidden;
+            padding-top: 100px; /* Ajustado para a nova altura do cabeçalho */
+            background-image: url("fundo.png"); /* Certifique-se de que o nome do arquivo da imagem está correto */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center; /* Posição padrão para desktop: centro */
+            z-index: 1; /* Colocando a Hero Section atrás do cabeçalho */
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: var(--text-light); /* Cor base do texto: branco */
+            text-shadow:
+                2px 2px 3px rgba(0, 0, 0, 0.4),   /* Sombra escura principal, mais próxima */
+                4px 4px 6px rgba(0, 0, 0, 0.3),   /* Sombra escura secundária, um pouco mais espalhada */
+                -1px -1px 0px rgba(255, 255, 255, 0.2); /* Borda clara superior/esquerda sutil para "levantar" */
+        }
+
+
+        .hero-content p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px var(--sombra-forte); /* Sombra para legibilidade */
+            color: var(--text-light); /* Mantendo branco */
+        }
+
+        /* Buttons */
+        .btn-primary, .btn-secondary, .btn-primary-inverted, .btn-video-passeio {
+            display: inline-block;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary, .btn-secondary, .btn-primary-inverted {
+             border-radius: 5px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        .btn-primary:hover {
+            background-color: #002244;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background-color: #218838;
+        }
+
+        .btn-primary-inverted {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--text-light);
+        }
+
+        .btn-primary-inverted:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-video-passeio {
+            background-color: var(--laranja);
+            color: var(--text-light);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            max-width: 350px;
+            font-size: 1.1em;
+            padding: 15px 30px;
+            border-radius: 50px;
+        }
+
+        .btn-video-passeio:hover {
+            background-color: #cc6600;
+            transform: translateY(-3px);
+        }
+
+        .btn-video-passeio i {
+            font-size: 1.1em;
+        }
+
+        /* Info Scroll Sections */
+        section.info-scroll {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            color: var(--text-dark);
+            background-color: var(--cinza-claro);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--sombra-clara);
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        section.info-scroll:nth-child(even) {
+            flex-direction: column;
+        }
+
+        section.info-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section.info-scroll a.image-link-to-tutoia {
+            display: block;
+            width: 90%;
+            max-width: 350px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px var(--sombra-media);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+        }
+
+        section.info-scroll a.image-link-to-tutoia img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+        }
+
+        section.info-scroll a.image-link-to-tutoia:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+
+        section.info-scroll img:not(.image-link-to-tutoia img) {
+            width: 90%;
+            max-width: 350px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px var(--sombra-media);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        section.info-scroll div {
+            flex: 1;
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+
+        section.info-scroll h2 {
+            font-size: 2.2em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        /* Why Us Section */
+        .why-us-section {
+            background-color: var(--bg-light);
+            text-align: center;
+        }
+
+        .why-us-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .feature-item {
+            background: var(--branco);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px var(--sombra-clara);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-item i {
+            font-size: 60px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .feature-item h4 {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .feature-item p {
+            color: var(--text-dark);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        .cta-section h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+        }
+
+        /* Contact Section */
+        .contact-form {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: var(--branco);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--sombra-clara);
+        }
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form input[type="tel"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            color: var(--text-dark);
+        }
+        .contact-form textarea {
+            resize: vertical;
+        }
+        .contact-form button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .contact-form button:hover {
+            background-color: #002244;
+        }
+
+        .contact-details {
+            margin-top: 30px;
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+        .contact-details i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding: 40px 0 20px;
+            font-size: 0.9em;
+            margin-top: 60px;
+        }
+
+        .main-footer .footer-cols {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 30px;
+        }
+
+        .footer-col .footer-logo {
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
+        .footer-col h4 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-col p {
+            margin-bottom: 10px;
+        }
+
+        .footer-col .social-links a {
+            color: var(--text-light);
+            font-size: 1.5em;
+            margin-right: 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .footer-col .social-links a:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 10px;
+        }
+
+        .footer-bottom a {
+            color: var(--accent-color);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        /* Page Transition Overlay */
+        #page-transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 2em;
+            font-weight: 700;
+            transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+        }
+
+        #page-transition-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease-in, visibility 0.3s ease-in;
+        }
+
+        body.page-entering {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+
+        body.page-entering.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        /* ========================================================= */
+        /* MEDIA QUERIES - Ajustes finos */
+        /* ========================================================= */
+
+        @media (min-width: 993px) {
+            .hero-content h1 {
+                font-size: 3.5em;
+            }
+            .hero-content p {
+                font-size: 1.3em;
+            }
+            section.info-scroll {
+                flex-direction: row;
+                text-align: left;
+            }
+            section.info-scroll:nth-child(even) {
+                flex-direction: row-reverse;
+            }
+            section.info-scroll a.image-link-to-tutoia,
+            section.info-scroll img:not(.image-link-to-tutoia img) {
+                width: 350px;
+                max-width: 40%;
+            }
+            .why-us-section h2 {
+                font-size: 2.5em;
+            }
+            .feature-item i {
+                font-size: 60px;
+            }
+            .cta-section h2 {
+                font-size: 3em;
+            }
+            .cta-section p {
+                font-size: 1.3em;
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            .hero-section {
+                /* Ajusta a posição para focar na parte direita em telas menores */
+                background-position: 80% center;
+                min-height: 500px;
+                height: 80vh;
+                padding-top: 70px;
+            }
+            .hero-content h1 {
+                font-size: 2.8em;
+            }
+            .hero-content p {
+                font-size: 1.1em;
+            }
+
+            /* Ajuste do menu de navegação para mobile - MAIS FINO */
+            .main-nav {
+                width: 180px; /* Largura fixa menor para o menu */
+                /* ou use max-width: 180px; e width: auto; se quiser que ele se ajuste um pouco, mas com limite */
+                right: 20px; /* Alinha no canto direito */
+                left: auto; /* Garante que não haja conflito com 'left' */
+                top: 100px; /* Inicia abaixo do cabeçalho */
+                transform: translateY(-10px); /* Apenas o transform vertical para animação */
+                max-height: calc(100vh - 150px); /* Altura máxima com scroll se precisar */
+                overflow-y: auto; /* Adiciona barra de rolagem se o conteúdo exceder a altura */
+            }
+
+            .main-nav.active {
+                transform: translateY(0); /* Apenas o transform vertical ativo */
+            }
+
+            .main-nav ul li a {
+                padding: 15px 10px; /* Ajusta o padding para um menu mais fino, reduzindo o espaço lateral */
+                /* white-space: normal;  Permite quebra de linha se o texto for muito longo para 180px */
+                text-align: left; /* Alinha o texto à esquerda dentro do menu */
+            }
+
+        }
+
+        /* Estilos para telas muito pequenas (mobile - max-width: 480px) */
+        @media (max-width: 480px) {
+            .main-header {
+                height: 70px;
+                padding: 0 10px;
+            }
+            .main-header .logo img {
+                height: 60px;
+            }
+            .hero-section {
+                background-position: 90% center;
+                min-height: 400px;
+                height: 70vh;
+                padding-top: 70px;
+            }
+            .hero-content h1 {
+                font-size: 1.8em;
+                text-shadow:
+                    1px 1px 2px rgba(0, 0, 0, 0.4),
+                    2px 2px 3px rgba(0, 0, 0, 0.3),
+                    -0.5px -0.5px 0px rgba(255, 255, 255, 0.2);
+            }
+            .hero-content p {
+                font-size: 0.9em;
+            }
+            .btn-primary, .btn-primary-inverted, .btn-video-passeio {
+                padding: 8px 18px;
+                font-size: 0.8em;
+            }
+            section.info-scroll {
+                padding: 15px;
+                margin: 20px auto;
+            }
+            section.info-scroll h2 {
+                font-size: 1.6em;
+            }
+            .why-us-section h2 {
+                font-size: 1.8em;
+            }
+            .feature-item h4 {
+                font-size: 1.2em;
+            }
+            .feature-item i {
+                font-size: 45px;
+            }
+            .cta-section h2 {
+                font-size: 2em;
+            }
+            .cta-section p {
+                font-size: 1em;
+            }
+            .contact-form input[type="text"],
+            .contact-form input[type="email"],
+            .contact-form input[type="tel"],
+            .contact-form textarea {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+            .contact-details {
+                font-size: 0.9em;
+            }
+            .main-footer .footer-cols {
+                gap: 20px;
+                padding-bottom: 20px;
+            }
+            .footer-col h4 {
+                font-size: 1.1em;
+            }
+            .footer-col .social-links a {
+                font-size: 1.3em;
+            }
+
+            /* Ajuste do menu de navegação para mobile MUITO FINO */
+            .main-nav {
+                width: 160px; /* Largura ainda mais fina para telas muito pequenas */
+                right: 10px; /* Mantém uma pequena margem na direita */
+                top: 70px; /* Ajusta o top para a altura menor do header */
+                max-height: calc(100vh - 120px); /* Ajusta a altura máxima para a nova altura do header */
+            }
+
+            .main-nav ul li a {
+                padding: 12px 8px; /* Ajusta o padding para o menu mais fino */
+                font-size: 0.9em; /* Opcional: diminui o tamanho da fonte para caber melhor */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="page-transition-overlay"></div>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="#home">
+                    <img src="logo.PNG" alt="Rangel Tur - Kite Turismo">
+                </a>
+            </div>
+            <div class="header-social-icons">
+                <a href="https://web.whatsapp.com/send?phone=5598999441705&text=Olá%20bom%20dia,%20gostaria%20de%20saber%20mais%20informações." target="_blank" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.instagram.com/seu_usuario" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/seu_usuario" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+            <div class="hamburger-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#sobre">Sobre Nós</a></li>
+                    <li><a href="#servicos">Serviços & Tours</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero-section">
+            <div class="hero-content">
+                <h1>Seus passeios e aventuras comecao Aqui!</h1>
+                <p>Rangel Tur: Explore as paisagens incríveis de Tutóia. Somos sua parceira nos melhores passeios e nas mais emocionantes aventuras de kite!</p>
+                <a href="#servicos" class="btn-primary">Explore Nossos Tours</a>
+            </div>
+        </section>
+
+        <section class="info-scroll" id="servicos">
+            <a href="index2.html" class="image-link-to-tutoia">
+                <img src="buggy.jpeg" alt="Passeios Turísticos em Tutóia - MA" />
+            </a>
+            <div>
+                <h2>Passeios Turísticos em Tutóia - MA</h2>
+                <p>
+                    Descubra os roteiros mais incríveis e as paisagens paradisíacas de Tutóia, Maranhão. Oferecemos passeios personalizados para você explorar as dunas, rios e praias, com todo o conforto e segurança. Uma experiência inesquecível espera por você!
+                </p>
+                <a href="index2.html" class="btn-video-passeio">
+                    Mais Detalhes sobre Tutóia <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </section>
+
+        <section class="info-scroll" id="kite-downwind">
+            <img src="kit.jpeg" alt="Acompanhamento de Kitesurf" />
+            <div>
+                <h2>Acompanhamento de Kitesurf Dowind</h2>
+                <p>Oferecemos acompanhamento especializado durante o seu dowind, garantindo suporte e segurança durante todo o percurso. Aproveite o vento e o mar com tranquilidade, enquanto nossa equipe cuida de cada detalhe para que sua experiência seja inesquecível.</p>
+            </div>
+        </section>
+
+        <section class="info-scroll" id="transfer">
+            <img src="hilux.jpeg" alt="Transfer Terrestre" />
+            <div>
+                <h2>Transfer Terrestre Confiável</h2>
+                <p>Oferecemos um serviço de transfer terrestre seguro, pontual e confortável, garantindo que você chegue ao seu destino com tranquilidade e sem preocupações. Conte com uma equipe experiente e dedicada para tornar seu transporte uma experiência agradável do início ao fim.</p>
+            </div>
+        </section>
+
+        <section id="sobre" class="why-us-section section-padding">
+            <div class="container">
+                <h2>Por Que Escolher a Rangel Tur?</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Segurança em Primeiro Lugar</h4>
+                        <p>Sua segurança é nossa prioridade máxima. Contamos com instrutores certificados e altamente experientes, prontos para oferecer um suporte completo. Além disso, todos os nossos equipamentos são constantemente revisados e mantidos sob rigorosos padrões de qualidade e segurança, garantindo a você total tranquilidade em todas as atividades, desde o transfer até o kite downwind.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h4>Conhecimento Local</h4>
+                        <p>Nascemos e vivemos aqui! Nosso conhecimento aprofundado da região nos permite guiá-lo pelos melhores picos de kite, identificando as condições de vento mais favoráveis e as marés ideais. Oferecemos rotas exclusivas e experiências autênticas, levando você a cenários paradisíacos que só os verdadeiros conhecedores do local podem proporcionar.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-handshake"></i>
+                        <h4>Atendimento Personalizado</h4>
+                        <p>Na Rangel Tur, cada cliente é único. Por isso, oferecemos um atendimento totalmente personalizado, desenhando sua aventura sob medida. Escutamos suas necessidades, adaptamos os roteiros e focamos nos seus objetivos, seja você um iniciante ou um kitesurfista experiente. Nosso compromisso é superar suas expectativas e garantir uma experiência memorável e exclusiva.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section section-padding">
+            <div class="container text-center">
+                <h2>Pronto para Viver Essa Aventura?</h2>
+                <p>Entre em contato conosco e comece a planejar sua viagem de kitesurf inesquecível!</p>
+                <a href="https://web.whatsapp.com/send?phone=5598999441705&text=Olá%20bom%20dia,%20gostaria%20de%20saber%20mais%20informações." class="btn-primary-inverted" target="_blank">Fale Conosco Agora!</a>
+            </div>
+        </section>
+
+        <section id="contato" class="section-padding bg-light">
+            <div class="container text-center">
+                <h2>Entre em Contato</h2>
+                <p>Preencha o formulário abaixo ou utilize nossos canais de atendimento.</p>
+                <form class="contact-form">
+                    <input type="text" placeholder="Seu Nome" required>
+                    <input type="email" placeholder="Seu Email" required>
+                    <input type="tel" placeholder="Seu Telefone (WhatsApp)" required>
+                    <textarea placeholder="Sua Mensagem" rows="5"></textarea>
+                    <button type="submit" class="btn-primary">Enviar Mensagem</button>
+                </form>
+                <div class="contact-details">
+                    <p><i class="fas fa-phone-alt"></i> <a href="https://web.whatsapp.com/send?phone=5598999441705&text=Olá%20bom%20dia,%20gostaria%20de%20saber%20mais%20informações." target="_blank" style="color: var(--text-dark); text-decoration: none;">(98) 99944-1705 (WhatsApp)</a></p>
+                    <p><i class="fas fa-envelope"></i> contato@rangeltur.com.br</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Rua Exemplo, 123, Bairro Centro, Parnaíba, PI - Brasil</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-cols">
+                <div class="footer-col about-col">
+                    <img src="logo.PNG" alt="Rangel Tur" class="footer-logo">
+                    <p>Sua porta de entrada para o kitesurf em Parnaíba e a descoberta das belezas do Delta do Parnaíba.</p>
+                    <div class="social-links">
+                        <a href="https://web.whatsapp.com/send?phone=5598999441705&text=Olá%20bom%20dia,%20gostaria%20de%20saber%20mais%20informações." target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/seu_usuario" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/seu_usuario" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col nav-col">
+                    <h4>Navegação</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#sobre">Sobre Nós</a></li>
+                        <li><a href="#servicos">Serviços & Tours</a></li>
+                        <li><a href="#contato">Entre em Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col contact-col">
+                    <h4>Contato</h4>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i> Rua Exemplo, 123, Bairro Centro<br>Parnaíba, PI - Brasil
+                    </p>
+                    <p>
+                        <i class="fas fa-phone-alt"></i> <a href="https://web.whatsapp.com/send?phone=5598999441705&text=Olá%20bom%20dia,%20gostaria%20de%20saber%20mais%20informações." target="_blank" style="color: var(--text-light); text-decoration: none;">(98) 99944-1705 (WhatsApp)</a>
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope"></i> contato@rangeltur.com.br
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Rangel Tur - Kite Turismo. Todos os direitos reservados.</p>
+                <p><a href="#">Política de Privacidade</a> | <a href="#">Termos de Serviço</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('page-transition-overlay');
+            const mainHeader = document.querySelector('.main-header');
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const mainNav = document.querySelector('.main-nav');
+            const navLinks = document.querySelectorAll('.main-nav ul li a');
+            const hamburgerIcon = hamburgerMenu.querySelector('i'); // Seleciona o ícone
+
+            let lastScrollTop = 0;
+
+            document.body.classList.add('page-entering');
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 50);
+
+            // Smooth scroll para âncoras internas
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+
+                        // Fecha o menu hambúrguer se estiver aberto
+                        if (mainNav.classList.contains('active')) {
+                            mainNav.classList.remove('active');
+                            hamburgerMenu.classList.remove('active'); // Remove a classe 'active' do menu hambúrguer
+                            hamburgerIcon.classList.remove('fa-times');
+                            hamburgerIcon.classList.add('fa-bars');
+                        }
+
+                        if (targetElement) {
+                            const headerOffset = mainHeader.offsetHeight; // Altura do cabeçalho
+                            let additionalOffset = 80; // Offset padrão para outros elementos
+
+                            // Ajuste do offset para a seção inicial (#home)
+                            if (targetId === '#home') {
+                                additionalOffset = 0; // Não precisa de offset extra para a seção home
+                            } else if (window.innerWidth <= 480) { // Ajuste para mobile muito pequeno
+                                additionalOffset = 50;
+                            } else if (window.innerWidth <= 768) { // Ajuste para mobile/tablet
+                                additionalOffset = 60;
+                            }
+
+
+                            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                            const offsetPosition = elementPosition - headerOffset - additionalOffset;
+
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+
+            // Transição de página para links externos ou .html
+            document.querySelectorAll('a[href]').forEach(link => {
+                const href = link.getAttribute('href');
+                // Verifica se é um link externo, não é uma âncora interna e termina com .html
+                if (href && !href.startsWith('#') && !href.includes('://') && href.endsWith('.html')) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        overlay.classList.add('active');
+                        setTimeout(() => {
+                            window.location.href = href;
+                        }, 350); // Tempo da transição (deve ser o mesmo do CSS do overlay)
+                    });
+                }
+            });
+
+            // Comportamento do cabeçalho ao rolar (esconder/mostrar e mudar estilo)
+            window.addEventListener('scroll', function() {
+                let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+                // Lógica para esconder/mostrar o cabeçalho (scroll down/up)
+                if (currentScroll > lastScrollTop && currentScroll > mainHeader.offsetHeight) {
+                    mainHeader.classList.add('hidden');
+                } else if (currentScroll < lastScrollTop || currentScroll <= mainHeader.offsetHeight) {
+                    mainHeader.classList.remove('hidden');
+                }
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Prevents negative scrolling
+
+                // Lógica para mudar o background e a cor dos ícones/logo do cabeçalho
+                if (currentScroll > 50) { // Ajuste esse valor conforme o ideal para sua página (50px de scroll)
+                    mainHeader.classList.add('scrolled');
+                } else {
+                    mainHeader.classList.remove('scrolled');
+                }
+            });
+
+            // Abrir/Fechar menu hambúrguer e animar o ícone
+            hamburgerMenu.addEventListener('click', function() {
+                mainNav.classList.toggle('active'); // Controla a visibilidade do menu
+                hamburgerMenu.classList.toggle('active'); // Adiciona/remove a classe 'active' ao hambúrguer
+                
+                // Troca o ícone (fa-bars para fa-times e vice-versa)
+                if (mainNav.classList.contains('active')) {
+                    hamburgerIcon.classList.remove('fa-bars');
+                    hamburgerIcon.classList.add('fa-times');
+                } else {
+                    hamburgerIcon.classList.remove('fa-times');
+                    hamburgerIcon.classList.add('fa-bars');
+                }
+            });
+
+            // Fechar menu hambúrguer ao clicar em um link do menu
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                        hamburgerMenu.classList.remove('active'); // Garante que a classe 'active' também seja removida do hambúrguer
+                        hamburgerIcon.classList.remove('fa-times');
+                        hamburgerIcon.classList.add('fa-bars');
+                    }
+                });
+            });
+
+            // Fechar menu hambúrguer ao clicar fora
+            document.addEventListener('click', function(event) {
+                if (!mainNav.contains(event.target) && !hamburgerMenu.contains(event.target) && mainNav.classList.contains('active')) {
+                    mainNav.classList.remove('active');
+                    hamburgerMenu.classList.remove('active'); // Garante que a classe 'active' também seja removida do hambúrguer
+                    hamburgerIcon.classList.remove('fa-times');
+                    hamburgerIcon.classList.add('fa-bars');
+                }
+            });
+
+            // Função para verificar se o elemento está na viewport (para animações de scroll)
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
+                    rect.bottom >= (window.innerHeight || document.documentElement.clientHeight) * 0.2
+                );
+            }
+
+            // Seleciona as seções que terão animação ao rolar
+            const sectionsToAnimate = document.querySelectorAll('.info-scroll, .why-us-section, .cta-section, #contato');
+
+            // Função para aplicar a classe 'visible' quando a seção entra na viewport
+            function checkSectionsVisibility() {
+                sectionsToAnimate.forEach(section => {
+                    if (isInViewport(section)) {
+                        section.classList.add('visible');
+                    } else {
+                        // Opcional: remover a classe 'visible' quando sai da viewport para animar novamente ao rolar
+                        // section.classList.remove('visible');
+                    }
+                });
+            }
+
+            // Adiciona listeners para verificar a visibilidade ao rolar e ao carregar a página
+            window.addEventListener('scroll', checkSectionsVisibility);
+            window.addEventListener('load', checkSectionsVisibility);
+            checkSectionsVisibility(); // Chama ao carregar para garantir que as seções visíveis no início já animem
+        });
+    </script>
+
+</body>
+</html>
