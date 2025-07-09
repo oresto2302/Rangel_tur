@@ -9,19 +9,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Variáveis CSS para cores da sua marca e consistência */
         :root {
             --azul: #003366;
             --amarelo: #ffe600;
             --laranja: #ff7f00;
-            --laranja-escuro: #cc6600; /* Novo tom de laranja para hover */
+            --laranja-escuro: #cc6600; 
             --branco: #ffffff;
             --cinza-claro: #f9f9f9;
             --texto-claro: #ffffff;
             --sombra-clara: rgba(0,0,0,0.1);
             --sombra-media: rgba(0,0,0,0.15);
             --primary-color: var(--azul);
-            --secondary-color: #25d366; /* Verde do WhatsApp */
+            --secondary-color: #25d366; 
             --accent-color: var(--amarelo);
             --text-dark: var(--azul);
             --text-light: var(--branco);
@@ -29,7 +28,6 @@
             --bg-dark: var(--azul);
         }
 
-        /* Reset Básico de estilos */
         * {
             margin: 0;
             padding: 0;
@@ -41,7 +39,8 @@
             line-height: 1.6;
             color: var(--text-dark);
             background-color: var(--branco);
-            overflow-x: hidden; /* Evita barra de rolagem horizontal indesejada */
+            overflow-x: hidden; 
+            
         }
 
         .container {
@@ -58,7 +57,6 @@
             text-align: center;
         }
 
-        /* --- Estilos do Header (Barra Superior) --- */
         .page-header {
             background-color: var(--branco);
             border-bottom: 2px solid var(--laranja);
@@ -73,15 +71,14 @@
             z-index: 999;
             height: auto;
 
-            /* Transição para a animação de aparecer/sumir */
             transition: top 0.3s ease-out, opacity 0.3s ease-out;
         }
 
-        /* Classe para esconder o header (usada pelo JavaScript) */
+        
         .page-header.hidden {
-            top: -120px; /* Move o header para fora da tela (ajuste se a logo for maior) */
-            opacity: 0; /* Torna-o invisível */
-            pointer-events: none; /* Impede cliques em elementos ocultos */
+            top: -120px; 
+            opacity: 0; 
+            pointer-events: none; 
         }
 
         .page-header .container {
@@ -102,7 +99,6 @@
             display: block;
         }
 
-        /* Estilo do Botão "Voltar à Página Inicial" */
         .page-header .back-button {
             background-color: var(--primary-color);
             color: var(--text-light);
@@ -124,7 +120,6 @@
             background-color: #002244;
         }
 
-        /* --- Seção de Conteúdo Principal (Passeios) --- */
         #tutoia-tours-details {
             background-color: var(--bg-light);
             text-align: center;
@@ -189,7 +184,6 @@
             text-align: left;
         }
 
-        /* Estilo para botões de ação dentro dos passeios */
         .tour-item-content .btn-primary {
             width: 100%;
             padding: 12px 15px;
@@ -209,8 +203,7 @@
             background-color: #002244;
         }
 
-        /* NOVO ESTILO PARA O BOTÃO QUE ABRE A GALERIA */
-        .tour-item-content .open-gallery-btn { /* Renomeado de .video-btn */
+        .tour-item-content .open-gallery-btn { 
             background-color: var(--laranja);
             color: var(--branco);
             padding: 12px 22px;
@@ -231,7 +224,6 @@
             box-shadow: 0 6px 12px rgba(0,0,0,0.3);
         }
 
-        /* --- Estilos para o Rodapé --- */
         .page-footer {
             background-color: var(--bg-dark);
             color: var(--text-light);
@@ -253,41 +245,40 @@
             transform: scale(1.1);
         }
 
-        /* --- Estilos da Galeria Modal (Lightbox) --- */
         .gallery-modal {
-            display: none; /* Escondido por padrão */
-            position: fixed; /* Fixado na tela */
-            z-index: 1000; /* Acima de tudo */
+            display: none; 
+            position: fixed;
+            z-index: 1000; 
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto; /* Permite rolagem se o conteúdo for grande */
-            background-color: rgba(0,0,0,0.9); /* Fundo escuro semi-transparente */
-            justify-content: center; /* Centraliza horizontalmente o conteúdo */
-            align-items: center; /* Centraliza verticalmente o conteúdo */
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.9); 
+            justify-content: center; 
+            align-items: center;
         }
 
         .gallery-modal.show {
-            display: flex; /* Mostra o modal */
+            display: flex; 
         }
 
         .gallery-content {
-            position: relative; /* Para posicionar botões e legenda */
+            position: relative; 
             max-width: 90%;
             max-height: 90%;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column; /* Conteúdo e legenda */
+            flex-direction: column; 
         }
 
         .gallery-content img,
         .gallery-content video {
             max-width: 100%;
-            max-height: 80vh; /* Ocupa no máximo 80% da altura da viewport */
+            max-height: 80vh; 
             display: block;
-            margin: auto; /* Centraliza */
+            margin: auto;
         }
 
         .gallery-close {
@@ -299,7 +290,7 @@
             font-weight: bold;
             transition: 0.3s;
             cursor: pointer;
-            z-index: 1001; /* Acima do conteúdo da galeria */
+            z-index: 1001; 
         }
 
         .gallery-close:hover,
@@ -318,8 +309,8 @@
             cursor: pointer;
             padding: 10px;
             transition: 0.3s;
-            user-select: none; /* Impede seleção de texto */
-            background-color: rgba(0,0,0,0.3); /* Fundo para melhorar visibilidade */
+            user-select: none; 
+            background-color: rgba(0,0,0,0.3); 
             border-radius: 5px;
         }
 
@@ -345,7 +336,6 @@
             margin-top: 10px;
         }
 
-        /* --- Responsividade (Media Queries) --- */
         @media (max-width: 768px) {
             .page-header .container {
                 min-height: 65px;
@@ -393,7 +383,6 @@
                 font-size: 1.25em;
             }
 
-            /* Ajustes para a galeria no mobile */
             .gallery-close {
                 top: 5px;
                 right: 15px;
@@ -413,7 +402,6 @@
             }
         }
 
-        /* Regras específicas para telas maiores que 768px (tablets maiores e desktops) */
         @media (min-width: 769px) {
             .page-header .container {
                 min-height: 80px;
@@ -530,7 +518,7 @@
                 <p style="margin-top: 40px; font-size: 1em; font-weight: 600;">
                     Pronto para viver essas experiências únicas em Tutóia? Entre em contato e personalize seu roteiro!
                 </p>
-                <a href="index.html" class="btn-primary" style="margin-top: 15px; font-size: 0.9em; padding: 10px 20px;">Fale Conosco e Reserve!</a>
+                <a href="https://wa.me/5598999441705" class="btn-primary" style="margin-top: 15px; font-size: 0.9em; padding: 10px 20px;" target="_blank">Fale Conosco e Reserve!</a>
             </div>
         </section>
     </main>
@@ -559,7 +547,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Script para a Animação do Header (Sumir/Aparecer) ---
             const header = document.querySelector('.page-header');
             let lastScrollY = window.scrollY;
             let ticking = false;
@@ -584,9 +571,7 @@
                 }
             });
 
-            header.classList.remove('hidden'); // Garante que o header esteja visível ao carregar
-
-            // --- Script para a Galeria Modal ---
+            header.classList.remove('hidden'); 
             const galleryModal = document.getElementById('galleryModal');
             const galleryCloseBtn = document.querySelector('.gallery-close');
             const galleryMediaWrapper = document.getElementById('galleryMedia');
@@ -596,9 +581,7 @@
             let currentGalleryIndex = 0;
             let activeGalleryItems = [];
 
-            // Dados da Galeria (AGORA COM SUAS IMAGENS!)
-            // Certifique-se de que esses arquivos de imagem e vídeo estejam na mesma pasta que o seu index2.html,
-            // ou forneça o caminho correto para eles.
+            // Dados da Galeria
             const galleries = {
                 "passeio-lencois": [
                     { src: 'video.MP4', type: 'video', caption: 'Assista ao vídeo da aventura nos Pequenos Lençóis!' },
@@ -609,78 +592,62 @@
                     { src: 'eles no lagoa do coqueiro.jpeg', type: 'image', caption: 'A paisagem espetacular da Lagoa do Coqueiro.' },
                     { src: 'imagem do por do sol 02.jpeg', type: 'image', caption: 'Outro ângulo do pôr do sol nas dunas e lagoas.' }
                 ],
-                // Você pode adicionar outras galerias aqui para outros passeios, se desejar
-                /*
-                "passeio-delta": [
-                    { src: 'delta_imagem1.jpg', type: 'image', caption: 'Ilha do Amor.' },
-                    { src: 'delta_imagem2.jpg', type: 'image', caption: 'Cenário do Delta.' }
-                ],
-                "revoada-guaras": [
-                    { src: 'guaras_video.mp4', type: 'video', caption: 'Vídeo da Revoada.' },
-                    { src: 'guaras_imagem1.jpg', type: 'image', caption: 'Guarás ao entardecer.' }
-                ]
-                */
+              
             };
 
-            // Função para exibir o item da galeria
             function showGalleryItem(index) {
                 if (activeGalleryItems.length === 0) return;
 
                 currentGalleryIndex = (index + activeGalleryItems.length) % activeGalleryItems.length;
                 const item = activeGalleryItems[currentGalleryIndex];
 
-                galleryMediaWrapper.innerHTML = ''; // Limpa o conteúdo anterior
+                galleryMediaWrapper.innerHTML = '';
                 if (item.type === 'video') {
                     const video = document.createElement('video');
                     video.src = item.src;
                     video.controls = true;
-                    video.autoplay = true; // Auto-play no vídeo
-                    video.loop = false; // Opcional: vídeo em loop (coloque true se quiser loop)
-                    video.muted = false; // Garante que o vídeo não comece mutado
+                    video.autoplay = true; 
+                    video.loop = false; 
+                    video.muted = false; 
                     galleryMediaWrapper.appendChild(video);
                 } else if (item.type === 'image') {
                     const img = document.createElement('img');
                     img.src = item.src;
                     galleryMediaWrapper.appendChild(img);
                 }
-                galleryCaption.textContent = item.caption || ''; // Exibe a legenda
+                galleryCaption.textContent = item.caption || ''; 
             }
 
-            // Event listener para abrir a galeria
             document.querySelectorAll('.open-gallery-btn').forEach(button => {
                 button.addEventListener('click', function(event) {
-                    event.preventDefault(); // Evita que o link # mude a URL
+                    event.preventDefault(); 
                     const galleryId = this.dataset.galleryId;
                     activeGalleryItems = galleries[galleryId];
 
                     if (activeGalleryItems && activeGalleryItems.length > 0) {
                         galleryModal.classList.add('show');
-                        document.body.style.overflow = 'hidden'; // Impede rolagem do corpo
-                        showGalleryItem(0); // Mostra o primeiro item da galeria
+                        document.body.style.overflow = 'hidden'; 
+                        showGalleryItem(0); 
                     } else {
                         console.warn(`Galeria com ID "${galleryId}" não encontrada ou vazia.`);
                     }
                 });
             });
 
-            // Event listener para fechar a galeria
             galleryCloseBtn.addEventListener('click', function() {
                 galleryModal.classList.remove('show');
                 document.body.style.overflow = ''; // Restaura a rolagem do corpo
                 galleryMediaWrapper.innerHTML = ''; // Limpa o conteúdo ao fechar
             });
 
-            // Event listener para navegação (próximo)
             galleryNextBtn.addEventListener('click', function() {
                 showGalleryItem(currentGalleryIndex + 1);
             });
 
-            // Event listener para navegação (anterior)
             galleryPrevBtn.addEventListener('click', function() {
                 showGalleryItem(currentGalleryIndex - 1);
             });
 
-            // Fechar com a tecla ESC
             document.addEventListener('keydown', function(event) {
                 if (event.key === 'Escape' && galleryModal.classList.contains('show')) {
                     galleryModal.classList.remove('show');
@@ -689,7 +656,6 @@
                 }
             });
 
-            // Fechar clicando fora da mídia (no fundo escuro do modal)
             galleryModal.addEventListener('click', function(event) {
                 if (event.target === galleryModal) {
                     galleryModal.classList.remove('show');

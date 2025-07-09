@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descubra Tutóia, Maranhão</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul: #003366;
+            --amarelo: #ffe600;
+            --laranja: #ff7f00;
+            --branco: #ffffff;
+            --cinza-claro: #f9f9f9;
+            --texto-claro: #ffffff;
+            --sombra-clara: rgba(0,0,0,0.1);
+            --sombra-media: rgba(0,0,0,0.15);
+            --sombra-forte: rgba(0,0,0,0.7);
+
+            --primary-color: var(--azul);
+            --accent-color: var(--amarelo);
+            --text-dark: var(--azul);
+            --text-light: var(--branco);
+            --bg-light: var(--cinza-claro);
+            --bg-dark: var(--azul);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Ajustes similiar ao header scrolled */
+        .main-header {
+            background-color: var(--branco);
+            border-bottom: 2px solid var(--laranja);
+            position: fixed; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px; 
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px var(--sombra-clara);
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out; 
+        }
+
+        .main-header.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .main-header .logo img {
+            height: 90px; 
+            transition: height 0.3s ease;
+        }
+
+        .btn-back-home {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 0.9em; 
+        }
+
+        .btn-back-home i {
+            font-size: 1.1em;
+        }
+
+        .btn-back-home:hover {
+            background-color: #002244;
+            transform: translateY(-2px);
+        }
+
+        
+        .hero-banner {
+            background-color: var(--azul);
+            color: var(--branco);
+            padding: 80px 20px 40px; 
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            min-height: 250px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-banner .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-banner h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px var(--sombra-forte);
+        }
+
+        .hero-banner p {
+            font-size: 1.4em;
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 3px var(--sombra-forte); 
+        }
+
+        #sobre-tutoia.content-section {
+            padding: 40px 20px;
+            background-color: var(--branco);
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--sombra-clara);
+            text-align: justify;
+        }
+
+        #sobre-tutoia.content-section h2 {
+            font-size: 2.2em;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        #sobre-tutoia.content-section p {
+            margin-bottom: 15px;
+            font-size: 1em;
+            line-height: 1.7;
+        }
+
+        .attraction-card-section {
+            background-color: var(--branco);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px var(--sombra-clara);
+            overflow: hidden;
+            margin-bottom: 40px; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .attraction-card-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 6px 20px var(--sombra-media);
+        }
+
+        .attraction-card-section .card-image {
+            width: 100%;
+            height: auto; 
+            display: block;
+            border-bottom: 4px solid var(--laranja);
+        }
+
+        .attraction-card-section .card-content-wrapper {
+            padding: 30px;
+            text-align: left; 
+        }
+
+        .attraction-card-section h2 {
+            font-size: 2.2em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center; 
+        }
+
+        .attraction-card-section p {
+            font-size: 1em;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: #555;
+            text-align: justify;
+        }
+
+        .attraction-card-section .text-image {
+            max-width: 70%; 
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 10px auto 20px;
+            display: block; 
+            border-bottom: none; /
+        }
+
+
+      
+        .highlight-phrase {
+            font-weight: bold;
+            color: var(--accent-color); 
+            display: block; 
+            margin-top: 10px; 
+            margin-bottom: 10px; 
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding: 40px 0 20px;
+            font-size: 0.9em;
+            margin-top: 60px;
+        }
+
+        .main-footer .footer-cols {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 30px;
+        }
+
+        .footer-col .footer-logo {
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
+        .footer-col h4 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+         }
+
+        .footer-col ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-col p {
+            margin-bottom: 10px;
+        }
+
+        .footer-col .social-links a {
+            color: var(--text-light);
+            font-size: 1.5em;
+            margin-right: 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .footer-col .social-links a:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 10px;
+        }
+
+        .footer-bottom a {
+            color: var(--accent-color);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .main-header {
+                height: 70px;
+            }
+            .main-header .logo img {
+                height: 65px; 
+            }
+            .btn-back-home {
+                padding: 8px 12px;
+                font-size: 0.8em;
+            }
+            .hero-banner {
+                padding: 60px 20px 30px;
+                min-height: 200px;
+            }
+            .hero-banner h1 {
+                font-size: 2.2em;
+            }
+            .hero-banner p {
+                font-size: 1.1em;
+            }
+            #sobre-tutoia.content-section h2, .attraction-card-section h2 {
+                font-size: 2em;
+            }
+            .attraction-card-section .card-content-wrapper {
+                padding: 20px;
+            }
+            .attraction-card-section p {
+                font-size: 0.95em;
+            }
+            .attraction-card-section .text-image {
+                max-width: 90%; 
+                margin: 10px auto; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-banner h1 {
+                font-size: 1.8em;
+            }
+            .hero-banner p {
+                font-size: 0.9em;
+            }
+            .main-header .logo img {
+                height: 55px; 
+            }
+            .attraction-card-section .text-image {
+                max-width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="logo.PNG" alt="Rangel Tur - Kite Turismo">
+                </a>
+            </div>
+            <div class="header-actions">
+                <a href="index.html" class="btn-back-home">
+                    <i class="fas fa-arrow-left"></i> Voltar à Página Inicial
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-banner">
+            <div class="container">
+                <h1>Descubra Tutóia, Maranhão</h1>
+                <p>História, cultura, culinária e as incomparáveis belezas naturais de uma das joias do litoral maranhense.</p>
+            </div>
+        </section>
+
+        <section id="sobre-tutoia" class="content-section container">
+            <h2>Um Paraíso no Litoral Maranhense</h2>
+            <p>Tutóia é um município encantador localizado no litoral leste do Maranhão, parte integrante do Roteiro das Emoções. Conhecida por suas paisagens intocadas, que incluem dunas vastas, mangues, e praias virgens, a cidade é um convite à aventura e ao relaxamento. É também um portal para o famoso Delta do Parnaíba, um dos maiores deltas em mar aberto do mundo. Sua estrutura vital reside próximo de bancos de areia do Delta, que revelam rios cristalinos e escondidos dos turistas, uma impressionante processo de buggy pelos morros dos Pequenos Lençóis. A cultura local, predominantemente à base de frutos do mar frescos, complementa as comparáveis e alegres lendas, muitas delas com raízes indigenas e afro-brasileiras.</p>
+        </section>
+
+        <section id="culinaria" class="attraction-card-section container">
+            <div class="card-content-wrapper">
+                <img src="Culinaria.jpeg" alt="Culinária Local de Tutóia" class="text-image">
+                <h2>Culinária Local</h2>
+                <p>Tem melhor forma de conhecer um lugar do que através da sua gastronomia? Em Tutóia, além das belezas naturais, você vai se encantar com os sabores únicos da culinária local. </p>
+                <p>O grande destaque da cozinha tutoiense são os frutos do mar, com ênfase especial para o camarão, considerado o principal produto da região. <span class="highlight-phrase">Por isso, Tutóia é carinhosamente conhecida como a Terra do Camarão.</span> Essa fama ultrapassa fronteiras — em diversos mercados do Brasil é possível encontrar o Camarão de Tutóia, reconhecido por sua qualidade e sabor incomparáveis. </p>
+                <p>Esse reconhecimento não se deve apenas à quantidade produzida, mas também ao habitat natural e à alimentação do camarão local, que resultam em uma carne saborosa, de textura única e ótima qualidade. </p>
+                <p>Na cidade, há uma variedade de restaurantes que oferecem diferentes formas de preparo: camarão no bafo, frito, assado na brasa, em moquecas, no abacaxi e muito mais. Ou seja, tem camarão para todos os gostos! </p>
+                <p>Tutóia é um destino que conquista pelo paladar — e cada refeição é um convite a mergulhar nas tradições e nos sabores do Maranhão. </p>
+            </div>
+        </section>
+
+        <section id="historia" class="attraction-card-section container">
+            <img src="foto de tutoia.jpeg" alt="Vista aérea de Tutóia" class="text-image">
+            <div class="card-content-wrapper">
+                <h2>Um Pouco da História da Cidade</h2>
+                <p>Tutóia possui uma história rica e fascinante, marcada pela presença indígena e pela colonização portuguesa. Originada como um pequeno povoado de pescadores, a cidade cresceu e se tornou um importante polo comercial e portuário na região. Seu nome, de origem tupi-guarani, reflete a forte influência dos povos indígenas que habitaram essas terras.</p>
+                <p>A cidade é um verdadeiro mosaico cultural, onde tradições indígenas, portuguesas e africanas se entrelaçam, dando vida a lendas, costumes e uma relação profunda com o mar e a pesca. Os charmosos casarões coloniais e antigas igrejas são testemunhas silenciosas desse passado que ainda pulsa nas ruas. Para conhecer ainda mais sobre Tutóia, vale a pena explorar seus pontos históricos e desfrutar das experiências locais, como a culinária típica, os festivais culturais e os passeios que revelam a essência da cidade.</p>
+            </div>
+        </section>
+
+        <section id="navio" class="attraction-card-section container">
+            <img src="navio antes.webp" alt="Navio Aline Ramos antes do naufrágio" class="text-image">
+            <div class="card-content-wrapper">
+                <h2>O Mistério do Navio Aline Ramos</h2>
+                <p>O Aline Ramos foi um navio cargueiro de sal, construído em 1963 e rebatizado com esse nome em 1978. Em 16 de novembro de 1981, enquanto se aproximava do porto da Ilha do Igoronhon, no Maranhão, o navio encalhou próximo à Ilha do Caju, devido a uma falha no radar e às fortes correntezas da região. Estavam a bordo 17 tripulantes, e apesar do susto, ninguém se feriu. </p>
+                <p>Após o acidente, a embarcação foi rebocada até a praia da Barra de Tutóia, onde permanece até hoje. Com o tempo, o navio se deteriorou, mas acabou se tornando um ponto turístico curioso, cercado por histórias, lendas e fotografias. </p>
+                <img src="navio hoje.jpg" alt="Navio Aline Ramos hoje, após o naufrágio" class="text-image">
+                <p>Hoje, o Aline Ramos é um dos símbolos de Tutóia, lembrando a importância da navegação e do transporte de sal na região, além de compor o chamado cemitério de navios do litoral maranhense. </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-cols">
+                <div class="footer-col about-col">
+                    <img src="logo.PNG" alt="Rangel Tur" class="footer-logo">
+                    <p>Tutóia: sua porta de entrada para desvendar as maravilhas naturais e culturais do Delta das Américas. Viva aventuras e passeio inesquecível!</p>
+                    <div class="social-links">
+                        <a href="https://web.whatsapp.com/send?phone=5598999441705&text=Olá%20bom%20dia,%20gostaria%20de%20saber%20mais%20informações." target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/seu_usuario" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/seu_usuario" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col nav-col">
+                    <h4>Navegação</h4>
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#sobre">Sobre Nós</a></li>
+                        <li><a href="index.html#servicos">Serviços & Tours</a></li>
+                        <li><a href="tutoia.html">Tutóia</a></li>
+                        <li><a href="index.html#contato">Entre em Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col contact-col">
+                    <h4>Contato</h4>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i> Rua Exemplo, 123, Bairro Centro<br>Parnaíba, PI - Brasil
+                    </p>
+                    <p>
+                        <i class="fas fa-phone-alt"></i> <a href="https://web.whatsapp.com/send?phone=5598999441705&text=Olá%20bom%20dia,%20gostaria%20de%20saber%20mais%20informações." target="_blank" style="color: var(--text-light); text-decoration: none;">(98) 99944-1705 (WhatsApp)</a>
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope"></i> contato@rangeltur.com.br
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Rangel Tur - Kite Turismo. Todos os direitos reservados.</p>
+                <p><a href="#">Política de Privacidade</a> | <a href="#">Termo de Serviço</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainHeader = document.querySelector('.main-header');
+            let lastScrollTop = 0;
+
+            window.addEventListener('scroll', function() {
+                let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (currentScroll > lastScrollTop && currentScroll > mainHeader.offsetHeight) {
+                    mainHeader.classList.add('hidden');
+                } else if (currentScroll < lastScrollTop || currentScroll <= mainHeader.offsetHeight) {
+                    mainHeader.classList.remove('hidden');
+                }
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+            });
+        });
+    </script>
+</body>
+</html>
