@@ -342,9 +342,8 @@
             max-width: 900px;
             margin: 60px auto;
             padding: 40px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            /* Removed opacity and transform from here */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Kept for other sections */
             color: var(--text-dark);
             background-color: var(--cinza-claro);
             border-radius: 8px;
@@ -354,6 +353,12 @@
             align-items: center;
             flex-direction: column; /* Default for smaller screens*/
             text-align: center;
+        }
+
+        /* Add these styles to handle the animation for later sections */
+        section.info-scroll:not(.visible) {
+            opacity: 0;
+            transform: translateY(30px);
         }
 
         section.info-scroll:nth-child(even) {
@@ -746,7 +751,7 @@
             </div>
         </section>
 
-        <section class="info-scroll">
+        <section class="info-scroll visible">
             <a href="tutoia.html" class="image-link-to-tutoia">
                 <img src="tutoia nos coqueiros.jpeg" alt="Belezas Naturais de Tutóia - MA" /> </a>
             <div>
@@ -994,7 +999,8 @@
             // Function to apply 'visible' class when section enters viewport
             function checkSectionsVisibility() {
                 sectionsToAnimate.forEach(section => {
-                    if (isInViewport(section)) {
+                    // Only apply animation logic to sections that don't already have 'visible'
+                    if (!section.classList.contains('visible') && isInViewport(section)) {
                         section.classList.add('visible');
                     }
                 });
