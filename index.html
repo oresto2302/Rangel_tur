@@ -14,7 +14,7 @@
             --amarelo: #ffe600;
             --laranja: #ff7f00;
             --branco: #ffffff;
-            --cinza-claro: #f9f9f9;
+            --cinza-claro: #11111100;
             --texto-claro: #ffffff;
             --sombra-clara: rgba(0,0,0,0.1);
             --sombra-media: rgba(0,0,0,0.15);
@@ -308,9 +308,9 @@
         }
 
         .btn-primary-inverted:hover {
-            background-color: var(--accent-color);
+            background-color: var(--laranja);
             color: var(--primary-color);
-            border-color: var(--accent-color);
+            border-color: var(--laranja);
         }
 
         .btn-video-passeio {
@@ -377,7 +377,7 @@
             flex-shrink: 0;
             border-radius: 8px;
             box-shadow: 0 2px 8px var(--sombra-media);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* This is the key transition */
             cursor: pointer;
             text-decoration: none;
             position: relative;
@@ -391,8 +391,8 @@
         }
 
         section.info-scroll a.image-link-to-tutoia:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transform: translateY(-5px); /* This is the hover animation */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* This is the hover animation */
         }
 
         section.info-scroll img:not(.image-link-to-tutoia img) {
@@ -401,9 +401,15 @@
             height: auto;
             border-radius: 8px;
             box-shadow: 0 2px 8px var(--sombra-media);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* This is the key transition */
             display: block;
             flex-shrink: 0;
+        }
+
+        /* NEW: Hover effect for all other images in info-scroll sections */
+        section.info-scroll img:not(.image-link-to-tutoia img):hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
 
         section.info-scroll div {
@@ -640,7 +646,7 @@
                 padding: 0 10px;
             }
             .main-header .logo img {
-                height: 60px;
+                height: 80px; /* Aumentado de 60px para 80px */
             }
             .hero-section {
                 background-position: 90% center;
@@ -759,7 +765,7 @@
                 <p>
                     Tutóia, no Maranhão, é um paraíso de dunas, rios e praias intocadas. Descubra a culinária local, a rica história e o mistério do Navio Aline Ramos. Sua aventura pelo Delta do Parnaíba começa aqui!
                 </p>
-                <a href="tutoia.html" class="btn-primary">
+                <a href="tutoia.html" class="btn-video-passeio">
                     Descubra Tutóia <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
@@ -799,7 +805,8 @@
         <section id="empresa-ceo" class="info-scroll section-padding">
             <img src="CEO.jpg" alt="Foto do CEO" />
             <div>
-                <h2>Um Pouco Mais Sobre Nossa Empresa e Nosso CEO</h2>
+                <h2>Rangel Cristiano Souto Olimpio</h2>
+                <h3>Presidente</h3>
                 <p>A Rangel Tur nasceu da paixão por Tutóia e pelo desejo de compartilhar suas belezas com o mundo. Nosso CEO, **[Nome do CEO]**, um entusiasta de esportes aquáticos e profundo conhecedor da região, fundou a empresa com a visão de oferecer experiências de turismo inesquecíveis, focadas na segurança, conforto e imersão cultural. Com anos de experiência no setor, **[Ele/Ela]** lidera nossa equipe com dedicação, garantindo que cada passeio e cada serviço reflitam nosso compromisso com a excelência e a satisfação do cliente. Somos mais que uma agência de turismo; somos facilitadores de sonhos e criadores de memórias.</p>
             </div>
         </section>
@@ -811,17 +818,17 @@
                     <div class="feature-item">
                         <i class="fas fa-shield-alt"></i>
                         <h4>Segurança em Primeiro Lugar</h4>
-                        <p>Sua segurança é nossa prioridade máxima. Contamos com instrutores certificados e altamente experientes, prontos para oferecer um suporte completo. Além disso, todos os nossos equipamentos são constantemente revisados e mantidos sob rigorosos padrões de qualidade e segurança, garantindo a você total tranquilidade em todas as atividades, desde o transfer até o kite downwind.</p>
+                        <p>Sua segurança é nossa prioridade máxima. Contamos com guias e profissionais altamente experientes e qualificados, prontos para oferecer um suporte completo. Além disso, todos os nossos equipamentos são constantemente revisados e mantidos sob rigorosos padrões de qualidade e segurança, garantindo a você total tranquilidade em todos os seus passeios e aventuras.</p>
                     </div>
                     <div class="feature-item">
                         <i class="fas fa-map-marked-alt"></i>
                         <h4>Conhecimento Local</h4>
-                        <p>Nascemos e vivemos aqui! Nosso conhecimento aprofundado da região nos permite guiá-lo pelos melhores picos de kite, identificando as condições de vento mais favoráveis e as marés ideais. Oferecemos rotas exclusivas e experiências autênticas, levando você a cenários paradisíacos que só os verdadeiros conhecedores do local podem proporcionar.</p>
+                        <p>Nascemos e vivemos aqui! Nosso conhecimento aprofundado da região nos permite guiá-lo pelos melhores roteiros e experiências, identificando as condições ideais para cada aventura. Oferecemos rotas exclusivas e vivências autênticas, levando você a cenários paradisíacos e segredos locais, proporcionando uma imersão genuína que só a vivência local oferece.</p>
                     </div>
                     <div class="feature-item">
                         <i class="fas fa-handshake"></i>
                         <h4>Atendimento Personalizado</h4>
-                        <p>Na Rangel Tur, cada cliente é único. Por isso, oferecemos um atendimento totalmente personalizado, desenhando sua aventura sob medida. Escutamos suas necessidades, adaptamos os roteiros e focamos nos seus objetivos, seja você um iniciante ou um kitesurfista experiente. Nosso compromisso é superar suas expectativas e garantir uma experiência memorável e exclusiva.</p>
+                        <p>Na Rangel Tur, cada cliente é único. Por isso, oferecemos um atendimento totalmente personalizado, desenhando sua aventura sob medida. Escutamos suas necessidades, adaptamos os roteiros e focamos nos seus objetivos, para que sua experiência seja exatamente como você sonha. Nosso compromisso é superar suas expectativas e garantir uma experiência memorável e exclusiva.</p>
                     </div>
                 </div>
             </div>
@@ -830,7 +837,7 @@
         <section class="cta-section section-padding">
             <div class="container text-center">
                 <h2>Pronto para Viver Essa Aventura?</h2>
-                <p>Entre em contato conosco e comece a planejar sua viagem de kitesurf inesquecível!</p>
+                <p>Sua aventura começa agora! Fale conosco e vamos planejar cada detalhe.</p>
                 <a href="https://wa.me/5598999441705?text=Olá%20bom%20dia,%20gostaria%20de%20saber%20mais%20informações." class="btn-primary-inverted" target="_blank">Fale Conosco Agora!</a>
             </div>
         </section>
