@@ -269,7 +269,7 @@
         }
 
         /* Buttons */
-        .btn-primary, .btn-secondary, .btn-primary-inverted, .btn-video-passeio {
+        .btn-primary, .btn-secondary, .btn-primary-inverted, .btn-video-passeio, .btn-portfolio {
             display: inline-block;
             padding: 12px 25px;
             text-decoration: none;
@@ -279,7 +279,7 @@
             cursor: pointer;
         }
 
-        .btn-primary, .btn-secondary, .btn-primary-inverted {
+        .btn-primary, .btn-secondary, .btn-primary-inverted, .btn-portfolio {
              border-radius: 5px;
         }
 
@@ -336,6 +336,24 @@
         .btn-video-passeio i {
             font-size: 1.1em;
         }
+
+        .btn-portfolio {
+            background-color: var(--bg-dark); /* Cor de fundo do rodapé */
+            color: var(--branco); /* Texto branco */
+            border: 2px solid var(--branco); /* Borda branca */
+            font-weight: bold;
+            font-size: 1.1em;
+            border-radius: 8px; /* Bordas arredondadas */
+            padding: 10px 20px;
+            margin-top: 15px;
+        }
+
+        .btn-portfolio:hover {
+            background-color: var(--laranja); /* Fica laranja ao passar o mouse */
+            border-color: var(--laranja); /* Borda também laranja */
+            transform: translateY(-2px); /* Efeito de levantar */
+        }
+
 
         /* Info Scroll Sections */
         section.info-scroll {
@@ -556,21 +574,12 @@
             text-align: center;
             padding-top: 20px;
         }
-
+        
         .footer-bottom p {
-            margin-bottom: 10px;
+            margin-bottom: 15px; /* Adicionado um pouco de margem para separar do botão */
+            font-size: 1em; /* Ajuste para um tamanho de fonte legível e compatível */
         }
-
-        .footer-bottom a {
-            color: var(--accent-color);
-            text-decoration: none;
-            margin: 0 10px;
-        }
-
-        .footer-bottom a:hover {
-            text-decoration: underline;
-        }
-
+        
         /* MEDIA QUERIES */
 
         @media (min-width: 993px) {
@@ -664,7 +673,7 @@
             .hero-content p {
                 font-size: 0.9em;
             }
-            .btn-primary, .btn-primary-inverted, .btn-video-passeio {
+            .btn-primary, .btn-primary-inverted, .btn-video-passeio, .btn-portfolio {
                 padding: 8px 18px;
                 font-size: 0.8em;
             }
@@ -712,8 +721,7 @@
                 padding: 12px 8px;
                 font-size: 0.9em;
             }
-        }
-    </style>
+        </style>
 </head>
 <body>
     <header class="main-header">
@@ -807,7 +815,7 @@
             <div>
                 <h2>Rangel Cristiano Souto Olimpio</h2>
                 <h3>Presidente</h3>
-                <p>A Rangel Tur nasceu da paixão por Tutóia e pelo desejo de compartilhar suas belezas com o mundo. Nosso CEO, **[Nome do CEO]**, um entusiasta de esportes aquáticos e profundo conhecedor da região, fundou a empresa com a visão de oferecer experiências de turismo inesquecíveis, focadas na segurança, conforto e imersão cultural. Com anos de experiência no setor, **[Ele/Ela]** lidera nossa equipe com dedicação, garantindo que cada passeio e cada serviço reflitam nosso compromisso com a excelência e a satisfação do cliente. Somos mais que uma agência de turismo; somos facilitadores de sonhos e criadores de memórias.</p>
+                <p>A Rangel Tur nasceu da paixão por Tutóia e pelo desejo de compartilhar suas belezas com o mundo. Nosso CEO, **Rangel Cristiano Souto Olimpio**, um entusiasta de esportes aquáticos e profundo conhecedor da região, fundou a empresa com a visão de oferecer experiências de turismo inesquecíveis, focadas na segurança, conforto e imersão cultural. Com anos de experiência no setor, **ele** lidera nossa equipe com dedicação, garantindo que cada passeio e cada serviço reflitam nosso compromisso com a excelência e a satisfação do cliente. Somos mais que uma agência de turismo; somos facilitadores de sonhos e criadores de memórias.</p>
             </div>
         </section>
 
@@ -876,8 +884,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Rangel Tur - Kite Turismo. Todos os direitos reservados.</p>
-                <p><a href="#">Política de Privacidade</a> | <a href="#">Termo de Serviço</a></p>
+                <p>Desenvolvido por Oresto Bacelar: <a href="https://oresto2302.github.io/Portfolio/" target="_blank" class="btn-portfolio">Acessar Portfólio Profissional</a></p>
             </div>
         </div>
     </footer>
